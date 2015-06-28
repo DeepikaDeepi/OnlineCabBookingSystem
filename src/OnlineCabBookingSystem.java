@@ -77,13 +77,13 @@ public class OnlineCabBookingSystem
 						}
 						if("Customer".equalsIgnoreCase(user.getUserType()))
 						{
-							this.performCustomerAction(sc, opReq, user);
+							this.performCustomerAction(opReq, user);
 							System.out.println("\nDo you want to perform any other operation? Please enter the code: ");
 							continue;
 						}
 						else if("Cabbie".equalsIgnoreCase(user.getUserType()))
 						{
-							this.performCabbieAction(sc, opReq, user);
+							this.performCabbieAction(opReq, user);
 							System.out.println("\nDo you want to perform any other operation? Please enter the code: ");
 							continue;
 						}
@@ -132,7 +132,8 @@ public class OnlineCabBookingSystem
 		 * @param opReq
 		 * @param user
 		 */
-		private void performCustomerAction(Scanner sc, int opReq, IUser user) {
+		private void performCustomerAction(int opReq, IUser user) {
+			Scanner sc = new Scanner(System.in);
 			if(opReq == 1)
 			{
 				System.out.println("Enter cab number to book: ");
@@ -196,7 +197,8 @@ public class OnlineCabBookingSystem
 		 * @param opReq
 		 * @param user
 		 */
-		private void performCabbieAction(Scanner sc, int opReq, IUser user) {
+		private void performCabbieAction(int opReq, IUser user) {
+			Scanner sc = new Scanner(System.in);
 			if(opReq == 1)
 			{
 				System.out.println("Enter cab number you want to register: ");
