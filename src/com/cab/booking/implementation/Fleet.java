@@ -102,6 +102,14 @@ public class Fleet implements IFleet
 		}		
 		this.availableCabs.remove(cabToDel);
 		this.allCabs.get(this.allCabs.indexOf(cabToDel)).setAvailable(availStatus);
+		if(availStatus)
+		{
+			System.out.println("Booking for " + cabNo + " is cancelled.");
+		}
+		else 
+		{
+			System.out.println("Booking for " + cabNo + " is confirmed.");
+		}
 	}
 
 	@Override

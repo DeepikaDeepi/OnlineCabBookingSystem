@@ -63,7 +63,16 @@ public class UserManager implements IUserManager {
 	@Override
 	public boolean deleteUser(IUser user) {
 		this.bookingHistory.remove(user.getUserID());
-		return this.allUsers.remove(user);
+		if(this.allUsers.remove(user))
+		{
+			System.out.println("Profile deleted successfully!");
+			return true;
+		}
+		else
+		{
+			System.out.println("Oops! Something went wrong. Please try again.");
+			return false;
+		}
 	}
 	
 	public void editUserInfo(IUser user)
@@ -113,6 +122,20 @@ public class UserManager implements IUserManager {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public IUser getUser(String userID) {
+		IUser usrToReturn = null;
+		for(IUser user : this.allUsers)
+		{
+			if(user.getUserID().equals(userID))
+			{
+				usrToReturn = user;
+				break;
+			}
+		}		
+		return usrToReturn;
 	}
 
 }

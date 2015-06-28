@@ -15,4 +15,6 @@ public interface IUserManager
 	public void showUserInfo(String userID);
 	
 	public boolean authenticate(String userID, String password);
+	
+	public IUser getUser(String userID);
 }

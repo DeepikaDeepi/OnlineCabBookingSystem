@@ -1,11 +1,17 @@
 package com.cab.booking.implementation;
 
 import com.cab.booking.ISessionManager;
-import com.cab.booking.IUser;
 
 public class SessionManager implements ISessionManager {
 
 	private static SessionManager INSTANCE;
+	
+	private long SESSION_ID;
+	
+	private SessionManager()
+	{
+		this.SESSION_ID = 1000;
+	}
 	
 	/*
 	 * Singleton instance
@@ -20,9 +26,8 @@ public class SessionManager implements ISessionManager {
 	}
 	
 	@Override
-	public String createSession(IUser user) {
-
-		return null;
+	public String createSession() {
+		return String.valueOf(SESSION_ID + 1);
 	}
 	
 

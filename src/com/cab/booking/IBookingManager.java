@@ -21,4 +21,8 @@ public interface IBookingManager
 	public void showAvailableCabs();
 	
 	public void showAllCabs(); 
+	
+	public ISession getSessionInfo();
+
+	public void setSessionInfo(ISession sessionInfo);
 }

@@ -15,4 +15,6 @@ public interface IUser
 	public void updateFullName(String fullName);
 	
 	public String getPassword();
+	
+	public String getUserType();
 }

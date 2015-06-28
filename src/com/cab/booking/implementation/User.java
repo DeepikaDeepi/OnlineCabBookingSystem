@@ -9,16 +9,22 @@ public class User implements IUser {
 	private String emailID;
 	private String gender;
 	private String fullName;
+	private String userType;
 	
-	public User(String userID, String password, String emailID, String gender, String fullName)
+	public User(String userID, String password, String emailID, String gender, String fullName, String userType)
 	{
 		this.userID = userID;
 		this.password = password;
 		this.emailID = emailID;
 		this.gender = gender;
 		this.fullName = fullName;
+		this.userType = userType;
 	}
 	
+	public String getUserType() {
+		return userType;
+	}
+
 	public String getUserID() {
 		return userID;
 	}
