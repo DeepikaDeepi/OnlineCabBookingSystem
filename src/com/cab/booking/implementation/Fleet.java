@@ -13,8 +13,6 @@ public class Fleet implements IFleet
 	
 	private final List<ICab> allCabs = new ArrayList<ICab>();
 	
-	private final List<ICab> availableCabs = new ArrayList<ICab>();
-	
 	private final Object lock = new Object();
 	
 	public static synchronized Fleet getInstance()
@@ -30,7 +28,7 @@ public class Fleet implements IFleet
 	public boolean registerCab(String cabType, double minFare, String cabNo) {
 		synchronized (lock) {
 			ICab cab = new Cab(cabNo, cabType, minFare);
-			return allCabs.add(cab) || availableCabs.add(cab);
+			return allCabs.add(cab);
 		}
 	}
 
@@ -46,7 +44,7 @@ public class Fleet implements IFleet
 					break;
 				}
 			}
-			boolean status = this.allCabs.remove(cabToDel) || this.availableCabs.remove(cabToDel);
+			boolean status = this.allCabs.remove(cabToDel);
 			return status;
 		}
 	}
@@ -55,9 +53,12 @@ public class Fleet implements IFleet
 	public void showAvailableCabs() {
 		System.out.println("List of available cabs: ");
 		synchronized (lock) {
-			for(ICab cab : this.availableCabs)
+			for(ICab cab : this.allCabs)
 			{
-				System.out.println("Cab No: " + cab.getCabNo() + ", Cab Type: " + cab.getCabType() + " , Min Fare - " + cab.getMinFare());
+				if(cab.isAvailable())
+				{
+					System.out.println("Cab No: " + cab.getCabNo() + ", Cab Type: " + cab.getCabType() + " , Min Fare - " + cab.getMinFare());
+				}
 			}
 		}
 	}
@@ -92,7 +93,7 @@ public class Fleet implements IFleet
 		
 		ICab cabToDel = null;
 		
-		for(ICab cab : this.availableCabs)
+		for(ICab cab : this.allCabs)
 		{
 			if(cab.getCabNo().equals(cabNo))
 			{
@@ -100,7 +101,6 @@ public class Fleet implements IFleet
 				break;
 			}
 		}		
-		this.availableCabs.remove(cabToDel);
 		this.allCabs.get(this.allCabs.indexOf(cabToDel)).setAvailable(availStatus);
 		if(availStatus)
 		{
@@ -117,7 +117,7 @@ public class Fleet implements IFleet
 		synchronized (lock) {
 			for(ICab cab : this.allCabs)
 			{
-				if(cab.getCabNo().equals(cabNo))
+				if(cab.getCabNo().equalsIgnoreCase(cabNo))
 				{
 					return true;
 				}

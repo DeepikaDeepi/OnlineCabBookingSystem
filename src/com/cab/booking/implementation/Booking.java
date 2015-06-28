@@ -31,13 +31,13 @@ public class Booking implements IBooking
 	
 	public String bookCab(String cabNo, IUser user, String date)
 	{
-		if(Fleet.getInstance().isValidCab(cabNo))
+		if(!Fleet.getInstance().isValidCab(cabNo))
 		{
 			System.out.println("Sorry, the cab number specified is does not exist in our fleet!");
 			return null;
 		}
 		
-		if(Fleet.getInstance().isCabAvailable(cabNo))
+		if(!Fleet.getInstance().isCabAvailable(cabNo))
 		{
 			System.out.println("Sorry, the cab number specified is not available at the moment!");
 			return null;
