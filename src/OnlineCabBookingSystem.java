@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -15,6 +16,7 @@ import com.cab.booking.implementation.UserManager;
 
 public class OnlineCabBookingSystem 
 {
+	private static CountDownLatch latch;
 
 	class Instance implements Runnable
 	{
@@ -93,6 +95,7 @@ public class OnlineCabBookingSystem
 							
 					}
 				}
+				OnlineCabBookingSystem.latch.countDown();
 			}
 			else if(this.serviceCode == 2)
 			{
@@ -120,6 +123,7 @@ public class OnlineCabBookingSystem
 				{
 					System.out.println("User with the given login id already exists. Please try another login id.");
 				}
+				OnlineCabBookingSystem.latch.countDown();
 			}
 		}
 
@@ -221,20 +225,23 @@ public class OnlineCabBookingSystem
 		
 	}
 	
-	public static void main(String[] args) 
+	public static void main(String[] args) throws InterruptedException 
 	{
 		ExecutorService es = Executors.newFixedThreadPool(10);
 		Scanner sc = new Scanner(System.in);
 		OnlineCabBookingSystem ocbs = new OnlineCabBookingSystem();
 		int serviceCode = 0; int threadNum = 0;
-		System.out.println("Press 1 to login. \nPress 2 to register.");
 		while(true)
 		{
+			System.out.println("Press 1 to login. \nPress 2 to register.");
+			OnlineCabBookingSystem.latch = new CountDownLatch(1);
 			serviceCode = sc.nextInt();
 			if(serviceCode == 1 || serviceCode == 2)
 			{
 				Instance newThread = ocbs.new Instance(new BookingManager(), serviceCode, threadNum++);
-				es.execute(newThread);
+				//es.execute(newThread);
+				new Thread(newThread).start();
+				OnlineCabBookingSystem.latch.await();
 			}
 			else
 			{
