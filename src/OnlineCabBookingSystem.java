@@ -94,6 +94,33 @@ public class OnlineCabBookingSystem
 					}
 				}
 			}
+			else if(this.serviceCode == 2)
+			{
+				//Add code for registration
+				System.out.println("Enter the login ID you wish to use: "); 
+				String userID = sc.nextLine();
+				System.out.println("Enter password for your profile: ");
+				String password = sc.nextLine();
+				System.out.println("Enter your email ID for communication: ");
+				String emailID = sc.nextLine();
+				System.out.println("Enter your gender (Male/Female/Transgender): ");
+				String gender = sc.nextLine();
+				System.out.println("Enter your full name: ");
+				String fullName = sc.nextLine();
+				System.out.println("Are you a 'Customer' or a 'Cabbie'? Please enter the same text below: ");
+				String userType = sc.nextLine();
+				
+				IUser newUser = new User(userID, password, emailID, gender, fullName, userType);
+				boolean result = UserManager.getInstance().addUser(newUser);
+				if(result)
+				{
+					System.out.println("User registration successful. Please login to continue.");
+				}
+				else
+				{
+					System.out.println("User with the given login id already exists. Please try another login id.");
+				}
+			}
 		}
 
 		/**
@@ -204,7 +231,7 @@ public class OnlineCabBookingSystem
 		while(true)
 		{
 			serviceCode = sc.nextInt();
-			if(serviceCode == 1 || serviceCode == 3)
+			if(serviceCode == 1 || serviceCode == 2)
 			{
 				Instance newThread = ocbs.new Instance(new BookingManager(), serviceCode, threadNum++);
 				es.execute(newThread);
@@ -212,6 +239,7 @@ public class OnlineCabBookingSystem
 			else
 			{
 				System.out.println("Sorry, no such service is available.");
+				System.out.println("Press 1 to login. \nPress 2 to register.");
 			}
 		}
 	}

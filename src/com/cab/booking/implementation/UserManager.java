@@ -57,6 +57,13 @@ public class UserManager implements IUserManager {
 
 	@Override
 	public boolean addUser(IUser user) {
+		for(IUser extUser : this.allUsers)
+		{
+			if(user.getUserID().equals(extUser))
+			{
+				return false;
+			}
+		}
 		return this.allUsers.add(user);
 	}
 
